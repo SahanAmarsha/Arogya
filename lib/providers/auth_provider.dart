@@ -4,11 +4,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../env.dart';
+import 'env.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier
 {
+
+  var webKey = environment["WebKey"];
+
   String _token;
   DateTime _expiryDate;
   String _userId;
@@ -38,7 +41,8 @@ class Auth with ChangeNotifier
   //SignUp Method
   Future<void> signUp(String email, String password) async
   {
-    const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[${Properties.WEBKEY}]';
+
+    var url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[$webKey]';
     try
     {
       final response = await http.post(url, body: json.encode({
@@ -77,7 +81,7 @@ class Auth with ChangeNotifier
   //LogIn Method
   Future<void> logIn(String email, String password) async
   {
-    const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[${Properties.WEBKEY}]';
+    var url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[$webKey]';
     try{
 
       final response = await http.post(url, body: json.encode({

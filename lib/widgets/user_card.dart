@@ -6,26 +6,17 @@ import '../providers/user_provider.dart';
 import '../screens/user_details_screen.dart';
 
 class UserCard extends StatelessWidget {
-  
-  const UserCard({
-    Key key,
-    @required this.loadedUser,
-}) : super(key:key);
-
-  final User loadedUser;
-
-
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserProvider>(context);
+    final userData = Provider.of<UserProvider>(context, listen: false,);
     final user = userData.user;
     return GridTile(
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(
               UserDetailsScreen.routeName,
-              arguments: loadedUser.id
+              arguments:user.id
           );
         },
         child: Container(
@@ -42,7 +33,10 @@ class UserCard extends StatelessWidget {
             ],
           ),
           child: Text(
-            'Your Info'
+            'Your Info',
+            style: TextStyle(
+              fontSize: 30
+            ),
           ),
         ),
       ),
@@ -53,7 +47,7 @@ class UserCard extends StatelessWidget {
         ),
         backgroundColor: Colors.black54,
         title: Text(
-          loadedUser.name,
+          user.name,
           textAlign: TextAlign.center,
         ),
       ),

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/user_provider.dart';
 
 import '../widgets/user_card.dart';
 
 class DashboardScreen extends StatelessWidget {
 
+  static const routeName='dashboard';
+
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserProvider>(context)
     return Scaffold(
         appBar: AppBar(
           title: Text('Arogya Dashboard Screen'),
@@ -23,11 +21,7 @@ class DashboardScreen extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10
           ),
-          itemBuilder: (ctx, i) => UserCard(
-            loadedUser.id,
-            loadedUser.name,
-            loadedUser.age,
-          ),
+          itemBuilder: (ctx, i) => UserCard(),
       ),
     );
   }

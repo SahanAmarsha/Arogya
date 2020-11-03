@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/user.dart';
+import '../providers/user_provider.dart';
 import '../screens/user_details_screen.dart';
 
 class UserCard extends StatelessWidget {
+  
+  const UserCard({
+    Key key,
+    @required this.loadedUser,
+}) : super(key:key);
 
-  final String id;
-  final String name;
-  final int age;
-  final String avatarImage =  '';
+  final User loadedUser;
 
-  UserCard(this.id, this.name, this.age);
+
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserProvider>(context);
+    final user = userData.user;
     return GridTile(
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(
               UserDetailsScreen.routeName,
-              arguments: id
+              arguments: loadedUser.id
           );
         },
         child: Container(
@@ -46,7 +53,7 @@ class UserCard extends StatelessWidget {
         ),
         backgroundColor: Colors.black54,
         title: Text(
-          name,
+          loadedUser.name,
           textAlign: TextAlign.center,
         ),
       ),

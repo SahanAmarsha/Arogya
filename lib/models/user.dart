@@ -5,6 +5,7 @@ class User {
   final String name;
   final String address;
   final int age;
+  final String avatar;
   final String occupation;
   final String status;
   final String nicNumber;
@@ -16,7 +17,8 @@ class User {
     @required this.age,
     @required this.occupation,
     @required this.status,
-    @required this.nicNumber
+    @required this.nicNumber,
+    @required this.avatar
   });
 
 

@@ -19,7 +19,7 @@ class UserProvider with ChangeNotifier{
     return loadedUser;
   }
 
-  void addUser() {
+  void addUser(User user) {
     notifyListeners();
   }
 

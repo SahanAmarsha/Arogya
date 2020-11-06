@@ -1,3 +1,4 @@
+import 'package:arogya/screens/add_user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
             DashboardScreen.routeName: (ctx) => DashboardScreen(),
             UserDetailsScreen.routeName: (ctx) => UserDetailsScreen(),
             PreventionGuideScreen.routeName: (ctx) => PreventionGuideScreen(),
+            AddUserScreen.routeName: (ctx) => AddUserScreen()
           }),
     );
   }

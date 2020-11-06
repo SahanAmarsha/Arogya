@@ -32,23 +32,37 @@ class UserCard extends StatelessWidget {
               )
             ],
           ),
-          child: Text(
-            'Your Info',
-            style: TextStyle(
-              fontSize: 30
-            ),
+          child: Column(
+            children: [
+              Text(
+                'Your Info',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: Theme.of(context).accentColor,
+                    size: 50,
+                  ),
+                  Text(
+                    user.name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontStyle: FontStyle.normal
+                    ),
+
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-      ),
-      footer: GridTileBar(
-        leading: Icon(
-          Icons.person,
-          color: Theme.of(context).accentColor,
-        ),
-        backgroundColor: Colors.black54,
-        title: Text(
-          user.name,
-          textAlign: TextAlign.center,
         ),
       ),
     );

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './screens/prevention_screen.dart';
 import './screens/dashboard_screen.dart';
 import './screens/user_details_screen.dart';
 import './providers/user_provider.dart';
 
 void main() => runApp(MyApp());
 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => UserProvider(),
+    return ChangeNotifierProvider.value(
+      value: UserProvider(),
       child: MaterialApp(
           title: 'Arogya',
           theme: ThemeData(
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
           routes: {
             DashboardScreen.routeName: (ctx) => DashboardScreen(),
             UserDetailsScreen.routeName: (ctx) => UserDetailsScreen(),
+            PreventionGuideScreen.routeName: (ctx) => PreventionGuideScreen(),
           }),
     );
   }

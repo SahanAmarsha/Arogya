@@ -22,5 +22,6 @@ class UserProvider with ChangeNotifier{
   void addUser() {
     notifyListeners();
   }
+
 }
 

@@ -37,16 +37,38 @@ class DashboardScreen extends StatelessWidget {
             ],)
           ],
         ),
-      body: GridView.builder(
-          padding: const EdgeInsets.all(20.0),
-          itemCount: 1,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: 6/2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          UserCard(),
+          SizedBox(
+         height: 20,
           ),
-          itemBuilder: (ctx, i) => UserCard(),
+          ButtonTheme(
+            minWidth: 300,
+            height: 60,
+            child: RaisedButton(
+              child:
+              Text('Start Tracking', style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'OpenSans',
+                fontSize: 20
+              ),),
+              onPressed: () {
+
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding:
+              EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+              color: Theme.of(context).accentColor,
+              textColor: Color.fromRGBO(31, 58, 147, 1.0),
+            ),
+          ),
+        ],
+
       ),
     );
   }

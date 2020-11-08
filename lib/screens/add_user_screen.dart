@@ -15,8 +15,10 @@ class AddUserScreen extends StatefulWidget {
 
 class _AddUserScreenState extends State<AddUserScreen> {
 
-  final _priceFocusNode =FocusNode();
-  final _descFocusNode =FocusNode();
+  final _ageFocusNode =FocusNode();
+  final _nicFocusNode =FocusNode();
+  final _occupationFocusNode =FocusNode();
+  final _addressFocusNode =FocusNode();
   final _imageUrlController = new TextEditingController();
   final _imgUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
@@ -44,8 +46,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
   void dispose() {
     // TODO: implement dispose
     _imgUrlFocusNode.removeListener(_updateImageUrl);
-    _priceFocusNode.dispose();
-    _descFocusNode.dispose();
+    _ageFocusNode.dispose();
+    _addressFocusNode.dispose();
     _imageUrlController.dispose();
     _imgUrlFocusNode.dispose();
     super.dispose();
@@ -73,51 +75,51 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
   Future<void> _saveForm() async
   {
-    final isValid = _form.currentState.validate();
-    if(!isValid)
-    {
-      return;
-    }
-    _form.currentState.save();
-
-    setState(() {
-      _isLoading = true;
-    });
-
-
-
-      try{
-        await Provider.of<UserProvider>(context, listen: false).addUser(_editUser);
-      } catch (error)
-      {
-        await showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-              title: Text('An error occured'),
-              content: Text('Something went wrong'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Okay'),
-                  onPressed: ()
-                  {
-                    Navigator.of(ctx).pop();
-
-                  },
-                )
-              ],
-            )
-        );
-
-      }
+//    final isValid = _form.currentState.validate();
+//    if(!isValid)
+//    {
+//      return;
+//    }
+//    _form.currentState.save();
+//
+//    setState(() {
+//      _isLoading = true;
+//    });
+//
+//
+//
+//      try{
+//        await Provider.of<UserProvider>(context, listen: false).addUser(_editUser);
+//      } catch (error)
+//      {
+//        await showDialog(
+//            context: context,
+//            builder: (ctx) => AlertDialog(
+//              title: Text('An error occured'),
+//              content: Text('Something went wrong'),
+//              actions: <Widget>[
+//                FlatButton(
+//                  child: Text('Okay'),
+//                  onPressed: ()
+//                  {
+//                    Navigator.of(ctx).pop();
+//
+//                  },
+//                )
+//              ],
+//            )
+//        );
+//
+//      }
       //      finally{
       //
       //        setState(() {
       //          _isLoading = false;
       //        });
       //      }
-    setState(() {
-      _isLoading = false;
-    });
+//    setState(() {
+//      _isLoading = false;
+//    });
     Navigator.of(context).pushReplacementNamed(DashboardScreen.routeName);
 
     //Navigator.of(context).pop();
@@ -128,7 +130,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: Text('Add a New User'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
@@ -149,18 +151,18 @@ class _AddUserScreenState extends State<AddUserScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
-                initialValue: _initValues['title'],
-                decoration: InputDecoration(labelText: 'Title'),
+                initialValue: _initValues['name'],
+                decoration: InputDecoration(labelText: 'Name'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_)
                 {
-                  FocusScope.of(context).requestFocus(_priceFocusNode);
+                  FocusScope.of(context).requestFocus(_nicFocusNode);
                 },
                 validator: (value)
                 {
                   if(value.isEmpty)
                   {
-                    return ('Please provide a value');
+                    return ('Please provide a name');
                   } else
                   {
                     return null;
@@ -168,38 +170,103 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 },
                 onSaved: (value)
                 {
-                  _editUser = Product(
-                    title: value,
-                    price: _editUser.price,
-                    desc: _editUser.desc,
-                    imgUrl: _editUser.imgUrl,
+                  _editUser = User(
                     id: _editUser.id,
-                    isFavourite: _editUser.isFavourite,
+                    name: value,
+                    nicNumber: _editUser.nicNumber,
+                    occupation: _editUser.occupation,
+                    address: _editUser.address,
+                    age: _editUser.age,
+                    avatar: _editUser.avatar,
                   );
                 },
               ),
               TextFormField(
-                initialValue: _initValues['price'],
-                decoration: InputDecoration(labelText: 'Price'),
+                initialValue: _initValues['nicNumber'],
+                decoration: InputDecoration(labelText: 'NIC Number'),
                 textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                focusNode: _priceFocusNode,
+                focusNode: _nicFocusNode,
                 onFieldSubmitted: (_)
                 {
-                  FocusScope.of(context).requestFocus(_descFocusNode);
+                  FocusScope.of(context).requestFocus(_occupationFocusNode);
                 },
                 validator: (value)
                 {
                   if(value.isEmpty)
                   {
-                    return ('Please provide a value');
-
-                  }else if(double.tryParse(value)==null){
-
-                    return ('Please enter a valid number');
-                  }else if(double.parse(value)<=0.0)
+                    return ('Please provide a valid NIC number');
+                  } else
                   {
-                    return ('Please enter a valid number');
+                    return null;
+                  }
+                },
+                onSaved: (value)
+                {
+                  _editUser = User(
+                    id: _editUser.id,
+                    name: _editUser.name,
+                    nicNumber: value,
+                    occupation: _editUser.occupation,
+                    address: _editUser.address,
+                    age: _editUser.age,
+                    avatar: _editUser.avatar,
+                  );
+                },
+              ),
+              TextFormField(
+                initialValue: _initValues['occupation'],
+                decoration: InputDecoration(labelText: 'Occupation'),
+                textInputAction: TextInputAction.next,
+                focusNode: _occupationFocusNode,
+                onFieldSubmitted: (_)
+                {
+                  FocusScope.of(context).requestFocus(_ageFocusNode);
+                },
+                validator: (value)
+                {
+                  if(value.isEmpty)
+                  {
+                    return ('Please provide a title');
+                  } else
+                  {
+                    return null;
+                  }
+                },
+                onSaved: (value)
+                {
+                  _editUser = User(
+                    id: _editUser.id,
+                    name: _editUser.name,
+                    nicNumber: _editUser.nicNumber,
+                    occupation: value,
+                    address: _editUser.address,
+                    age: _editUser.age,
+                    avatar: _editUser.avatar,
+                  );
+                },
+              ),
+              TextFormField(
+                initialValue: _initValues['age'],
+                decoration: InputDecoration(labelText: 'Age'),
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                focusNode: _ageFocusNode,
+                onFieldSubmitted: (_)
+                {
+                  FocusScope.of(context).requestFocus(_addressFocusNode);
+                },
+                validator: (value)
+                {
+                  if(value.isEmpty)
+                  {
+                    return ('Please provide a valid age');
+
+                  }else if(int.tryParse(value)==null){
+
+                    return ('Please enter a valid age');
+                  }else if(int.parse(value)<=0)
+                  {
+                    return ('Please enter a valid age');
                   } else
                   {
                     return (null);
@@ -207,31 +274,29 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 },
                 onSaved: (value)
                 {
-                  _editUser = Product(
-                    title: _editUser.title,
-                    price: double.parse(value),
-                    desc: _editUser.desc,
-                    imgUrl: _editUser.imgUrl,
+                  _editUser = User(
+                    name: _editUser.name,
+                    age: int.parse(value),
+                    address: _editUser.address,
+                    avatar: _editUser.avatar,
                     id: _editUser.id,
-                    isFavourite: _editUser.isFavourite,
+                    occupation: _editUser.occupation,
+                    nicNumber: _editUser.nicNumber
                   );
                 },
               ),
 
               TextFormField(
-                initialValue: _initValues['description'],
-                decoration: InputDecoration(labelText: 'Description'),
+                initialValue: _initValues['address'],
+                decoration: InputDecoration(labelText: 'Address'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
-                focusNode: _descFocusNode,
+                focusNode: _addressFocusNode,
                 validator: (value)
                 {
-                  if(value.isEmpty)
+                  if(value.isEmpty || value.length<=10)
                   {
-                    return ('Please provide a description');
-                  } else if(value.length<=10)
-                  {
-                    return ('Description should be more than 10 characters');
+                    return ('Please provide a valid address');
                   } else
                   {
                     return (null);
@@ -239,13 +304,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 },
                 onSaved: (value)
                 {
-                  _editUser = Product(
-                    title: _editUser.title,
-                    price:_editUser.price,
-                    desc: value,
-                    imgUrl: _editUser.imgUrl,
+                  _editUser = User(
+                    name: _editUser.name,
                     id: _editUser.id,
-                    isFavourite: _editUser.isFavourite,
+                    nicNumber: _editUser.nicNumber,
+                    avatar: _editUser.avatar,
+                    age: _editUser.age,
+                    address: value,
+                    occupation: _editUser.occupation,
                   );
                 },
               ),
@@ -299,13 +365,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
                       },
                       onSaved: (value)
                       {
-                        _editUser = Product(
-                          title: _editUser.title,
-                          price: _editUser.price,
-                          desc: _editUser.desc,
-                          imgUrl: value,
+                        _editUser = User(
+                          name: _editUser.name,
                           id: _editUser.id,
-                          isFavourite: _editUser.isFavourite,
+                          nicNumber: _editUser.nicNumber,
+                          age: _editUser.age,
+                          address: _editUser.address,
+                          occupation: _editUser.occupation,
+                          avatar: value,
                         );
                       },
                     ),

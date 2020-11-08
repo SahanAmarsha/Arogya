@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.lightGreenAccent,
             fontFamily: 'Lato',
           ),
-          home: DashboardScreen(),
+          home: AddUserScreen(),
           routes: {
             DashboardScreen.routeName: (ctx) => DashboardScreen(),
             UserDetailsScreen.routeName: (ctx) => UserDetailsScreen(),
